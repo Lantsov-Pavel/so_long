@@ -10,7 +10,11 @@ typedef struct s_map
 	int height;
 	int width;
 	int collectibles;
+	int player;
+	int exitl;
 	
 } t_map;
+
+char	*get_next_line(int fd);
 
 #endif
