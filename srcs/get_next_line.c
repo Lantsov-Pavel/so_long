@@ -1,6 +1,5 @@
 #include "../includes/so_long.h"
 
-
 static int	read_to_text_buffer(int fd, char **text_buffer, char *buffer)
 {
 	char	*temp;
@@ -92,7 +91,7 @@ static char	*get_line(char **text_buffer)
 char	*get_next_line(int fd)
 {
 	static char	*text_buffer;
- 	char		*buffer;
+	char		*buffer;
 	char		*result;
 	int			read_size;
 

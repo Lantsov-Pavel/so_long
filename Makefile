@@ -4,11 +4,18 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -I includes
 
 SRC_DIR = srcs
-OBJ_DIR = objects
+OBJ_DIR = objs
 LIBFT_DIR = includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRCS = main.c 
+OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/$(SRC_DIR)
+
+SRCS = main.c \
+$(SRC_DIR)/read_map.c \
+$(SRC_DIR)/utils.c \
+$(SRC_DIR)/validate_map.c \
+$(SRC_DIR)/validate_path.c \
+$(SRC_DIR)/get_next_line.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
@@ -16,6 +23,9 @@ all: $(LIBFT) $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
+
+$(OBJ_DIRS):
+	@mkdir -p $@
 
 $(NAME): $(OBJ_DIRS) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
