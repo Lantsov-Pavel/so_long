@@ -15,19 +15,15 @@ static int	process_line(char *line)
 	return (len);
 }
 
-static void	check_rect(t_map *map, char *path)
+static void	check_rect(t_map *map, int fd)
 {
 	char	*line;
-	int		fd;
 	int		line_len;
 
-	ft_printf("Trying to open file: %s\n", path);
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		logex("Cannot open map file");
 	map->height = 0;
 	map->width = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		line_len = process_line(line);
 		if (map->width == 0)
@@ -40,8 +36,8 @@ static void	check_rect(t_map *map, char *path)
 		}
 		map->height++;
 		free(line);
+		line = get_next_line(fd);
 	}
-	close(fd);
 }
 
 static void	allocate_map(t_map *map)
@@ -67,17 +63,14 @@ static void	allocate_map(t_map *map)
 	map->map[map->height] = NULL;
 }
 
-static void	fill_map(t_map *map, char *path)
+static void	fill_map(t_map *map, int fd)
 {
 	char	*line;
-	int		fd;
 	int		i;
 
 	i = 0;
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		logex("Cannot open map file");
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		if (i >= map->height)
 		{
@@ -85,21 +78,32 @@ static void	fill_map(t_map *map, char *path)
 			close(fd);
 			logex("Map reading error");
 		}
-		process_line(line);
-		ft_strlcpy(map->map[i], line, map->width + 1);
-		free(line);
-		i++;
+	
+	process_line(line);
+	ft_strlcpy(map->map[i], line, map->width + 1);
+	free(line);
+	i++;
+	line = get_next_line(fd);
 	}
-	close(fd);
 }
 
 void	read_map(t_map *map, char *path)
 {
+	int		fd;
+
 	if (!ft_strnstr(path, ".ber", ft_strlen(path)))
 		logex("Invalid file extension, must be .ber");
-	check_rect(map, path);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		logex("Cannot open map file");
+	check_rect(map, fd);
+	close(fd);
 	if (map->height < 3 || map->width < 3)
 		logex("Map is small");
 	allocate_map(map);
-	fill_map(map, path);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		logex("Cannot open map file");
+	fill_map(map, fd);
+	close(fd);
 }
