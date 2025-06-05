@@ -1,7 +1,7 @@
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I includes
+CFLAGS = -Wall -Wextra -Werror -g -I includes
 
 SRC_DIR = srcs
 OBJ_DIR = objs
@@ -19,7 +19,8 @@ $(SRC_DIR)/utils.c \
 $(SRC_DIR)/validate_map.c \
 $(SRC_DIR)/validate_path.c \
 $(SRC_DIR)/get_next_line.c \
-$(SRC_DIR)/graphics.c 
+$(SRC_DIR)/graphics.c \
+$(SRC_DIR)/gameplay.c 
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

@@ -28,7 +28,7 @@ static void load_textures(t_game *game)
     if (!dsp->txr_player || !dsp->txr_exit || !dsp->txr_collect || !dsp->txr_wall || !dsp->txr_ground)
         logex("Textures were not loaded");
 }
-static void draw_map(t_game *game, int size)
+void draw_map(t_game *game, int size)
 {
     t_display *dsp = game->display;
     t_map *map = game->map;
@@ -55,6 +55,7 @@ static void draw_map(t_game *game, int size)
         }
         i++;
     }
+    ft_printf("DRAW\n");
 }
 void init_graphics(t_game *game)
 {
