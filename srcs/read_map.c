@@ -32,7 +32,7 @@ static void	check_rect(t_map *map, int fd)
 		{
 			free(line);
 			close(fd);
-			logex("Cannot open map file");
+			logex("Map is not rectangular");
 		}
 		map->height++;
 		free(line);
