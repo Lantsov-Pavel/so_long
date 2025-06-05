@@ -1,6 +1,6 @@
 #include "../includes/so_long.h"
 
-int key_press(int keycode, t_game *game)
+int key_press(int keycode)
 {
     if (keycode == 53 || keycode == 65307)
         exit(0);
