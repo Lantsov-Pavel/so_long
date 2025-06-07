@@ -2,59 +2,58 @@
 
 static void	set_win(t_game *game, int size)
 {
-	t_display *dsp 
+	t_display	*dsp;
 
 	dsp = game->display;
 	size = 32;
 	dsp->height = game->map->height * size;
 	dsp->width = game->map->width * size;
-	dsp->mlx = mlx_init();
-	if (!dsp->mlx)
+	dsp->mx = mlx_init();
+	if (!dsp->mx)
 		logex("Initialization of mlx failed");
-	dsp->win = mlx_new_window(dsp->mlx, dsp->width, dsp->height, "so_long");
-	if (!dsp->win)
+	dsp->wn = mlx_new_window(dsp->mx, dsp->width, dsp->height, "so_long");
+	if (!dsp->wn)
 		logex("Creation of window failed");
 }
+
 static void	load_textures(t_game *game)
 {
-	t_display	*dsp 	
+	t_display	*dp;
 	int			w;
 	int			h;
 
-	dsp = game->display;
-	dsp->txr_play = mlx_xpm_file_to_image(dsp->mlx, "textures/p.xpm", &w, &h);
-	dsp->txr_exit = mlx_xpm_file_to_image(dsp->mlx, "textures/e.xpm", &w, &h);
-	dsp->txr_coll = mlx_xpm_file_to_image(dsp->mlx, "textures/c.xpm", &w, &h);
-	dsp->txr_wall = mlx_xpm_file_to_image(dsp->mlx, "textures/w.xpm", &w, &h);
-	dsp->txr_grnd = mlx_xpm_file_to_image(dsp->mlx, "textures/g.xpm", &w, &h);
-	if (!dsp->txr_play || !dsp->txr_exit || !dsp->txr_coll || !dsp->txr_wall || !dsp->txr_grnd)
+	dp = game->display;
+	dp->pl = mlx_xpm_file_to_image(dp->mx, "textures/p.xpm", &w, &h);
+	dp->ex = mlx_xpm_file_to_image(dp->mx, "textures/e.xpm", &w, &h);
+	dp->ct = mlx_xpm_file_to_image(dp->mx, "textures/c.xpm", &w, &h);
+	dp->wl = mlx_xpm_file_to_image(dp->mx, "textures/w.xpm", &w, &h);
+	dp->gd = mlx_xpm_file_to_image(dp->mx, "textures/g.xpm", &w, &h);
+	if (!dp->pl || !dp->ex || !dp->ct || !dp->wl || !dp->gd)
 		logex("Textures were not loaded");
 }
+
 void	draw_map(t_game *game, int s)
 {
-	t_display	*dsp;
-	t_map		*map;
-	int		i;
-	int		j;
-    	
-	dsp = game->display;
-	map = game->map;
+	t_display	*dp;
+	int			i;
+	int			j;
+
+	dp = game->display;
 	i = 0;
-	while (i < map->height)
+	while (i < game->map->height)
 	{
 		j = 0;
-		while (j < map->width)
+		while (j < game->map->width)
 		{
-			mlx_put_image_to_window(dsp->mlx, dsp->win, dsp->txr_gd, j * s, i * s);
-			if (map->map[i][j] == '1')
-				mlx_put_image_to_window(dsp->mlx, dsp->win, dsp->txr_wl, j * s, i * s);
-			if (map->map[i][j] == 'P')
-				mlx_put_image_to_window(dsp->mlx, dsp->win, dsp->txr_pl, j * s, i * s);
-			if (map->map[i][j] == 'E')
-			       	mlx_put_image_to_window(dsp->mlx, dsp->win, dsp->txr_ex, j * s, i * s);
-			if (map->map[i][j] == 'C')
-				mlx_put_image_to_window(dsp->mlx, dsp->win, dsp->txr_cl, j * s, i * s);
-
+			mlx_put_image_to_window(dp->mx, dp->wn, dp->gd, j * s, i * s);
+			if (game->map->map[i][j] == '1')
+				mlx_put_image_to_window(dp->mx, dp->wn, dp->wl, j * s, i * s);
+			if (game->map->map[i][j] == 'P')
+				mlx_put_image_to_window(dp->mx, dp->wn, dp->pl, j * s, i * s);
+			if (game->map->map[i][j] == 'E')
+				mlx_put_image_to_window(dp->mx, dp->wn, dp->ex, j * s, i * s);
+			if (game->map->map[i][j] == 'C')
+				mlx_put_image_to_window(dp->mx, dp->wn, dp->ct, j * s, i * s);
 			j++;
 		}
 		i++;
@@ -63,9 +62,8 @@ void	draw_map(t_game *game, int s)
 
 void	init_graphics(t_game *game)
 {
-    
 	int	size;
-    
+
 	size = 32;
 	game->display = malloc(sizeof(t_display));
 	if (!game->display)

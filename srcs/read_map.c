@@ -77,7 +77,7 @@ static void	fill_map(t_map *map, int fd)
 			free(line);
 			close(fd);
 			logex("Map reading error");
-		}	
+		}
 		process_line(line);
 		ft_strlcpy(map->map[i], line, map->width + 1);
 		free(line);
