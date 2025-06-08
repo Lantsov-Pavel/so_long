@@ -4,17 +4,17 @@ int	game_off(t_game *game)
 {
 	int	i;
 
-	if (game->display->txr_wall)
-		mlx_destroy_image(game->display->mlx, game->display->txr_wall);
-	if (game->display->txr_ground)
-		mlx_destroy_image(game->display->mlx, game->display->txr_ground);
-	if (game->display->txr_player)
-		mlx_destroy_image(game->display->mlx, game->display->txr_player);
-	if (game->display->txr_collect)
-		mlx_destroy_image(game->display->mlx, game->display->txr_collect);
-	if (game->display->txr_exit)
-		mlx_destroy_image(game->display->mlx, game->display->txr_exit);
-	mlx_destroy_window(game->display->mlx, game->display->win);
+	if (game->display->wl)
+		mlx_destroy_image(game->display->mx, game->display->wl);
+	if (game->display->gd)
+		mlx_destroy_image(game->display->mx, game->display->gd);
+	if (game->display->pl)
+		mlx_destroy_image(game->display->mx, game->display->pl);
+	if (game->display->ct)
+		mlx_destroy_image(game->display->mx, game->display->ct);
+	if (game->display->ex)
+		mlx_destroy_image(game->display->mx, game->display->ex);
+	mlx_destroy_window(game->display->mx, game->display->wn);
 	i = 0;
 	while (i < game->map->height)
 		free(game->map->map[i++]);

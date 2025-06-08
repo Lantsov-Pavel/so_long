@@ -13,8 +13,8 @@ int	main(int argc, char **argv)
 	check_map(game.map);
 	check_path(game.map);
 	init_graphics(&game);
-	mlx_key_hook(game.display->win, key_press, &game);
-	mlx_hook(game.display->win, 17, 0, game_off, &game);
-	mlx_loop(game.display->mlx);
+	mlx_key_hook(game.display->wn, key_press, &game);
+	mlx_hook(game.display->wn, 17, 0, game_off, &game);
+	mlx_loop(game.display->mx);
 	return (0);
 }

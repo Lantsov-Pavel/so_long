@@ -5,7 +5,6 @@ static void	set_win(t_game *game, int size)
 	t_display	*dsp;
 
 	dsp = game->display;
-	size = 32;
 	dsp->height = game->map->height * size;
 	dsp->width = game->map->width * size;
 	dsp->mx = mlx_init();
