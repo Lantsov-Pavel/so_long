@@ -27,7 +27,15 @@ int	game_off(t_game *game)
 
 static void	refresh_pos_player(t_game *game, int next_x, int next_y)
 {
-	game->map->map[game->map->pos_pl_y][game->map->pos_pl_x] = '0';
+	int	ex_y;
+	int	ex_x;
+
+	ex_y = game->map->pos_ex_y;
+	ex_x = game->map->pos_ex_x;
+	if ((game->map->pos_pl_y == ex_y) && (game->map->pos_pl_x == ex_x))
+		game->map->map[game->map->pos_pl_y][game->map->pos_pl_x] = 'E';
+	else
+		game->map->map[game->map->pos_pl_y][game->map->pos_pl_x] = '0';
 	game->map->pos_pl_x = next_x;
 	game->map->pos_pl_y = next_y;
 	game->map->map[next_y][next_x] = 'P';
@@ -51,10 +59,10 @@ static void	pl_move(t_game *game, int x, int y)
 	{
 		if (game->collects == game->map->collects)
 		{
-			ft_printf("You win! Total moves: \n");
+			ft_printf("You win! Total moves: %d\n", game->moves);
 			game_off(game);
 			return ;
-		} 	
+		}
 	}
 	refresh_pos_player(game, next_x, next_y);
 }
@@ -69,7 +77,7 @@ int	key_press(int k_code, t_game *game)
 		pl_move(game, 0, 1);
 	else if (k_code == 0x0044 || k_code == 0x0064)
 		pl_move(game, 1, 0);
-	else if(k_code == 0xff1b)
+	else if (k_code == 0xff1b)
 		game_off(game);
 	return (0);
-}  
+}
