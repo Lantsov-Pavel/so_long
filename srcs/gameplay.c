@@ -44,16 +44,17 @@ static void	pl_move(t_game *game, int x, int y)
 	if (game->map->map[next_y][next_x] == '1')
 		return ;
 	game->moves++;
+	ft_printf("Moves: %d\n", game->moves);
 	if (game->map->map[next_y][next_x] == 'C')
 		game->collects++;
 	if (game->map->map[next_y][next_x] == 'E')
 	{
 		if (game->collects == game->map->collects)
 		{
-			ft_printf("You win\n");
+			ft_printf("You win! Total moves: \n");
 			game_off(game);
-		}
-		return ;
+			return ;
+		} 	
 	}
 	refresh_pos_player(game, next_x, next_y);
 }
@@ -68,5 +69,7 @@ int	key_press(int k_code, t_game *game)
 		pl_move(game, 0, 1);
 	else if (k_code == 0x0044 || k_code == 0x0064)
 		pl_move(game, 1, 0);
+	else if(k_code == 0xff1b)
+		game_off(game);
 	return (0);
-}
+}  
