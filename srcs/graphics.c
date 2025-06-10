@@ -12,7 +12,23 @@ static void	set_win(t_game *game, int size)
 		logex("Initialization of mlx failed");
 	dsp->wn = mlx_new_window(dsp->mx, dsp->width, dsp->height, "so_long");
 	if (!dsp->wn)
+	{
+		mlx_destroy_display(dsp->mx);
 		logex("Creation of window failed");
+	}
+}
+static void free_loaded_textures(t_display *d)
+{
+    if (d->pl)
+        mlx_destroy_image(d->mx, d->pl);
+    if (d->ex)
+        mlx_destroy_image(d->mx, d->ex);
+    if (d->ct)
+        mlx_destroy_image(d->mx, d->ct);
+    if (d->wl)
+        mlx_destroy_image(d->mx, d->wl);
+    if (d->gd)
+        mlx_destroy_image(d->mx, d->gd);
 }
 
 static void	load_textures(t_game *game)
@@ -28,7 +44,10 @@ static void	load_textures(t_game *game)
 	dp->wl = mlx_xpm_file_to_image(dp->mx, "textures/w.xpm", &w, &h);
 	dp->gd = mlx_xpm_file_to_image(dp->mx, "textures/g.xpm", &w, &h);
 	if (!dp->pl || !dp->ex || !dp->ct || !dp->wl || !dp->gd)
+	{
+		free_loaded_textures(dp);
 		logex("Textures were not loaded");
+	}
 }
 
 void	draw_map(t_game *game, int s)
@@ -64,7 +83,7 @@ void	init_graphics(t_game *game)
 	int	size;
 
 	size = 32;
-	game->display = malloc(sizeof(t_display));
+	game->display = ft_calloc(1, sizeof(t_display));
 	if (!game->display)
 		logex("Memory allocation failed");
 	set_win(game, size);

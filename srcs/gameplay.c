@@ -15,6 +15,7 @@ int	game_off(t_game *game)
 	if (game->display->ex)
 		mlx_destroy_image(game->display->mx, game->display->ex);
 	mlx_destroy_window(game->display->mx, game->display->wn);
+	mlx_destroy_display(game->display->mx);
 	i = 0;
 	while (i < game->map->height)
 		free(game->map->map[i++]);

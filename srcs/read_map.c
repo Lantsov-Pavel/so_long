@@ -89,8 +89,10 @@ static void	fill_map(t_map *map, int fd)
 void	read_map(t_map *map, char *path)
 {
 	int		fd;
+	char	*ext;
 
-	if (!ft_strnstr(path, ".ber", ft_strlen(path)))
+	ext = ft_strrchr(path, '.'); 
+	if(!ext || ft_strcmp(ext, ".ber") != 0)
 		logex("Invalid file extension, must be .ber");
 	fd = open(path, O_RDONLY);
 	if (fd < 0)

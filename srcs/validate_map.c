@@ -68,4 +68,6 @@ void	check_map(t_map *map)
 	check_walls(map);
 	if (map->plc != 1 || map->exc != 1)
 		logex("Map must contain only 1 exit and 1 player");
+	if (map->collects < 1)
+    logex("Map must contain at least 1 collectible");
 }
