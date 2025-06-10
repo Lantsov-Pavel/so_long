@@ -3,7 +3,7 @@
 
 # include <limits.h>
 # include "libft/libft.h"
-# include "minilibx-linux/mlx.h"
+# include "mlx.h"
 # include <X11/keysymdef.h>
 # include <fcntl.h>
 # define BUFFER_SIZE 42
